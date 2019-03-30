@@ -1,13 +1,13 @@
 {
-  "main.css": "/monty-hall-game/static/css/main.3daa772e.chunk.css",
-  "main.js": "/monty-hall-game/static/js/main.0607a0d3.chunk.js",
-  "main.js.map": "/monty-hall-game/static/js/main.0607a0d3.chunk.js.map",
+  "main.css": "/monty-hall-game/static/css/main.b65fbdad.chunk.css",
+  "main.js": "/monty-hall-game/static/js/main.2e8173ec.chunk.js",
+  "main.js.map": "/monty-hall-game/static/js/main.2e8173ec.chunk.js.map",
   "runtime~main.js": "/monty-hall-game/static/js/runtime~main.35762157.js",
   "runtime~main.js.map": "/monty-hall-game/static/js/runtime~main.35762157.js.map",
-  "static/js/2.d19161d0.chunk.js": "/monty-hall-game/static/js/2.d19161d0.chunk.js",
-  "static/js/2.d19161d0.chunk.js.map": "/monty-hall-game/static/js/2.d19161d0.chunk.js.map",
+  "static/js/2.38062eb5.chunk.js": "/monty-hall-game/static/js/2.38062eb5.chunk.js",
+  "static/js/2.38062eb5.chunk.js.map": "/monty-hall-game/static/js/2.38062eb5.chunk.js.map",
   "index.html": "/monty-hall-game/index.html",
-  "precache-manifest.f516bb7ea8bee4926888038d6aa37746.js": "/monty-hall-game/precache-manifest.f516bb7ea8bee4926888038d6aa37746.js",
+  "precache-manifest.7fd55e53b685b76aea2e52477b883946.js": "/monty-hall-game/precache-manifest.7fd55e53b685b76aea2e52477b883946.js",
   "service-worker.js": "/monty-hall-game/service-worker.js",
-  "static/css/main.3daa772e.chunk.css.map": "/monty-hall-game/static/css/main.3daa772e.chunk.css.map"
+  "static/css/main.b65fbdad.chunk.css.map": "/monty-hall-game/static/css/main.b65fbdad.chunk.css.map"
 }
