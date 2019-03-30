@@ -1,5 +1,5 @@
 import React from "react";
-import Door from "./Door";
+import Door from "../Door/Door";
 import { Container, Row, Col } from "react-bootstrap";
 import "./GamePage.css";
 
