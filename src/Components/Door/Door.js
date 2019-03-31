@@ -11,7 +11,7 @@ class Door extends React.Component {
     selectDoor() {
         if (this.props.selectedDoor) {
             this.props.selectedDoor(this.props.id);
-            this.setState({colourSelectedDoor: true})
+            this.setState({ colourSelectedDoor: true })
         }
     }
     render() {
@@ -21,7 +21,7 @@ class Door extends React.Component {
                 <h3>{this.props.id}</h3>
                 <div className="knob" />
 
-                {this.state.colourSelectedDoor&& <div><h2>Selected</h2></div>}
+                {this.state.colourSelectedDoor && <div><h2>Selected</h2></div>}
             </div>
         )
     }
