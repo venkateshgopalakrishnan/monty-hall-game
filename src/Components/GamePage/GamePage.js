@@ -27,7 +27,8 @@ class GamePage extends React.Component {
     userSelectedDoor: null,
     revealedDoor: null,
     userWon: null,
-    userSelectedFinal: null
+    userSelectedFinal: null,
+    prizeDoor: null
   };
 
   renderDoors = () => {
@@ -43,13 +44,13 @@ class GamePage extends React.Component {
     ));
   };
 
-  userSelection(id) {
+  userSelection = id => {
     this.setState({ userSelectedDoor: id });
     if (this.state.userSelectedDoor) {
     }
-  }
+  };
 
-  revealDoor() {
+  revealDoor = () => {
     var userSelectedDoor = this.state.userSelectedDoor;
     var prizes = this.state.prizes;
     var id =
@@ -57,73 +58,73 @@ class GamePage extends React.Component {
         ? prizes[1] === "Goat" && prizes[2] === "Goat"
           ? ["B", "C"][Math.floor(Math.random() * ["B", "C"].length)]
           : prizes[1] === "Goat"
-            ? "B"
-            : prizes[2] === "Goat"
-              ? "C"
-              : null
+          ? "B"
+          : prizes[2] === "Goat"
+          ? "C"
+          : null
         : userSelectedDoor === "B"
-          ? prizes[0] === "Goat" && prizes[2] === "Goat"
-            ? ["A", "C"][Math.floor(Math.random() * ["A", "C"].length)]
-            : prizes[0] === "Goat"
-              ? "A"
-              : prizes[2] === "Goat"
-                ? "C"
-                : null
-          : userSelectedDoor === "C"
-            ? prizes[0] === "Goat" && prizes[1] === "Goat"
-              ? ["A", "B"][Math.floor(Math.random() * ["A", "B"].length)]
-              : prizes[0] === "Goat"
-                ? "A"
-                : prizes[0] === "Goat"
-                  ? "B"
-                  : null
-            : null;
+        ? prizes[0] === "Goat" && prizes[2] === "Goat"
+          ? ["A", "C"][Math.floor(Math.random() * ["A", "C"].length)]
+          : prizes[0] === "Goat"
+          ? "A"
+          : prizes[2] === "Goat"
+          ? "C"
+          : null
+        : userSelectedDoor === "C"
+        ? prizes[0] === "Goat" && prizes[1] === "Goat"
+          ? ["A", "B"][Math.floor(Math.random() * ["A", "B"].length)]
+          : prizes[0] === "Goat"
+          ? "A"
+          : prizes[0] === "Goat"
+          ? "B"
+          : null
+        : null;
     this.state.revealedDoor = id;
     return <h2>Door {id} has a goat behind it</h2>;
-  }
+  };
 
-  changeChoice() {
+  changeChoice = () => {
     this.setState(prevState => ({
       userSelectedFinal:
         prevState.userSelectedDoor === "A" && this.state.revealedDoor === "B"
           ? "C"
           : prevState.userSelectedDoor === "A" &&
             this.state.revealedDoor === "C"
-            ? "B"
-            : prevState.userSelectedDoor === "B" &&
-              this.state.revealedDoor === "A"
-              ? "C"
-              : prevState.userSelectedDoor === "B" &&
-                this.state.revealedDoor === "C"
-                ? "A"
-                : prevState.userSelectedDoor === "C" &&
-                  this.state.revealedDoor === "A"
-                  ? "B"
-                  : prevState.userSelectedDoor === "C" &&
-                    this.state.revealedDoor === "B"
-                    ? "A"
-                    : null
+          ? "B"
+          : prevState.userSelectedDoor === "B" &&
+            this.state.revealedDoor === "A"
+          ? "C"
+          : prevState.userSelectedDoor === "B" &&
+            this.state.revealedDoor === "C"
+          ? "A"
+          : prevState.userSelectedDoor === "C" &&
+            this.state.revealedDoor === "A"
+          ? "B"
+          : prevState.userSelectedDoor === "C" &&
+            this.state.revealedDoor === "B"
+          ? "A"
+          : null
     }));
-  }
+  };
 
-  declareResult() {
-    this.state.userSelectedFinal != null &&
-      (this.state.userSelectedFinal === "A" && this.state.prizes[0] === "Car"
-        ? (this.state.userWon = true)
-        : this.state.userSelectedFinal === "B" && this.state.prizes[1] === "Car"
-          ? (this.state.userWon = true)
-          : this.state.userSelectedFinal === "C" && this.state.prizes[2] === "Car"
-            ? (this.state.userWon = true)
-            : (this.state.userWon = false));
+  declareResult = () => {
+    this.state.userSelectedFinal === "A" && this.state.prizes[0] === "Car"
+      ? (this.state.userWon = true)
+      : this.state.userSelectedFinal === "B" && this.state.prizes[1] === "Car"
+      ? (this.state.userWon = true)
+      : this.state.userSelectedFinal === "C" && this.state.prizes[2] === "Car"
+      ? (this.state.userWon = true)
+      : (this.state.userWon = false);
 
-    var result = this.state.userWon && this.state.userWon === true ? (
-      <h2>You won</h2>
-    ) : this.state.userWon === false ? (
-      <h2>You Lost</h2>
-    ) : null;
+    var result =
+      this.state.userWon && this.state.userWon === true ? (
+        <h2>You won</h2>
+      ) : this.state.userWon === false ? (
+        <h2>You Lost</h2>
+      ) : null;
 
     return result;
-  }
+  };
 
   refreshPage = () => {
     this.setState({
@@ -136,7 +137,7 @@ class GamePage extends React.Component {
       userWon: null,
       userSelectedFinal: null
     });
-  }
+  };
 
   render() {
     return (
@@ -149,53 +150,58 @@ class GamePage extends React.Component {
             <span>Play</span>
           </button>
         ) : (
-            <div>
-              Game has started
+          <div>
+            Game has started
             <br />
+            <br />
+            <Container align="center">
+              <Row>{this.renderDoors()}</Row>
               <br />
-              <Container align="center">
-                <Row>{this.renderDoors()}</Row>
-                <br />
-                {this.state.userSelectedDoor && !this.state.userSelectedFinal && (
-                  <div>
-                    <h4>
-                      Now I would like to reveal one door which has a goat behind
-                      it
+              {this.state.userSelectedDoor && !this.state.userSelectedFinal && (
+                <div>
+                  <h4>
+                    Now I would like to reveal one door which has a goat behind
+                    it
                   </h4>
-                    {this.revealDoor()}
-                    <h4>Do you want to change your choice to the other door</h4>
-                    <Row>
-                      <Col xg={6}>
-                        <button
-                          className="button"
-                          style={{ fontSize: "30px" }}
-                          onClick={() => this.changeChoice()}
-                        >
-                          <span>Yes</span>
-                        </button>
-                      </Col>
-                      <Col xg={6}>
-                        <button
-                          className="button"
-                          style={{ fontSize: "30px" }}
-                          onClick={() =>
-                            this.setState({
-                              userSelectedFinal: this.state.userSelectedDoor
-                            })
-                          }
-                        >
-                          <span>No Way _|_</span>
-                        </button>
-                      </Col>
-                    </Row>
-                  </div>
-                )}
-                {this.declareResult()}
-                {this.state.userWon != null && <button className="button" onClick={() => { this.refreshPage() }}><span>Play Again</span></button>}
-
-              </Container>
-            </div>
-          )}
+                  {this.revealDoor()}
+                  <h4>Do you want to change your choice to the other door</h4>
+                  <Row>
+                    <Col xg={6}>
+                      <button
+                        className="button"
+                        style={{ fontSize: "30px" }}
+                        onClick={this.changeChoice}
+                      >
+                        <span>Yes</span>
+                      </button>
+                    </Col>
+                    <Col xg={6}>
+                      <button
+                        className="button"
+                        style={{ fontSize: "30px" }}
+                        onClick={() =>
+                          this.setState({
+                            userSelectedFinal: this.state.userSelectedDoor
+                          })
+                        }
+                      >
+                        <span>No Way _|_</span>
+                      </button>
+                    </Col>
+                  </Row>
+                </div>
+              )}
+              {this.state.userSelectedFinal != null
+                ? this.declareResult()
+                : null}
+              {this.state.userWon != null && (
+                <button className="button" onClick={this.refreshPage}>
+                  <span>Play Again</span>
+                </button>
+              )}
+            </Container>
+          </div>
+        )}
       </div>
     );
   }
