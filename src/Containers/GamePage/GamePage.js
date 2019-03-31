@@ -39,6 +39,12 @@ class GamePage extends React.Component {
           selectedDoor={
             !this.state.userSelectedDoor && (id => this.userSelection(id))
           }
+          colorDoor={
+            (this.state.userSelectedDoor || this.state.userSelectedFinal) ===
+            door
+              ? "doorSelected"
+              : "door"
+          }
         />
       </Col>
     ));
@@ -141,66 +147,51 @@ class GamePage extends React.Component {
 
   render() {
     return (
-      <div>
-        {this.state.isPlayClicked === false ? (
-          <button
-            className="button"
-            onClick={() => this.setState({ isPlayClicked: true })}
-          >
-            <span>Play</span>
-          </button>
-        ) : (
+      <div align="center" style = {{height: "100vh", width:"100%"}}>
+        <br />
+        <br />
+        <Container align="center">
+          <Row>{this.renderDoors()}</Row>
+        </Container>
+        <br />
+        {this.state.userSelectedDoor && !this.state.userSelectedFinal && (
           <div>
-            Game has started
-            <br />
-            <br />
-            <Container align="center">
-              <Row>{this.renderDoors()}</Row>
-              <br />
-              {this.state.userSelectedDoor && !this.state.userSelectedFinal && (
-                <div>
-                  <h4>
-                    Now I would like to reveal one door which has a goat behind
-                    it
-                  </h4>
-                  {this.revealDoor()}
-                  <h4>Do you want to change your choice to the other door</h4>
-                  <Row>
-                    <Col xg={6}>
-                      <button
-                        className="button"
-                        style={{ fontSize: "30px" }}
-                        onClick={this.changeChoice}
-                      >
-                        <span>Yes</span>
-                      </button>
-                    </Col>
-                    <Col xg={6}>
-                      <button
-                        className="button"
-                        style={{ fontSize: "30px" }}
-                        onClick={() =>
-                          this.setState({
-                            userSelectedFinal: this.state.userSelectedDoor
-                          })
-                        }
-                      >
-                        <span>No Way _|_</span>
-                      </button>
-                    </Col>
-                  </Row>
-                </div>
-              )}
-              {this.state.userSelectedFinal != null
-                ? this.declareResult()
-                : null}
-              {this.state.userWon != null && (
-                <button className="button" onClick={this.refreshPage}>
-                  <span>Play Again</span>
+            <h4>
+              Now I would like to reveal one door which has a goat behind it
+            </h4>
+            {this.revealDoor()}
+            <h4>Do you want to change your choice to the other door</h4>
+            <Row>
+              <Col xg={4}>
+                <button
+                  className="button"
+                  style={{ fontSize: "30px" }}
+                  onClick={this.changeChoice}
+                >
+                  <span>Yes</span>
                 </button>
-              )}
-            </Container>
+              </Col>
+              <Col xg={4}>
+                <button
+                  className="button"
+                  style={{ fontSize: "30px" }}
+                  onClick={() =>
+                    this.setState({
+                      userSelectedFinal: this.state.userSelectedDoor
+                    })
+                  }
+                >
+                  <span>No Way _|_</span>
+                </button>
+              </Col>
+            </Row>
           </div>
+        )}
+        {this.state.userSelectedFinal != null ? this.declareResult() : null}
+        {this.state.userWon != null && (
+          <button className="button" onClick={this.refreshPage}>
+            <span>Play Again</span>
+          </button>
         )}
       </div>
     );

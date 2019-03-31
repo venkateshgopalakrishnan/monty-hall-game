@@ -17,18 +17,13 @@ class Door extends React.Component {
   render() {
     return (
       <div
-        className="door"
+        className={this.props.colorDoor}
         onClick={() => this.selectDoor(this.props.selectedDoor)}
       >
         <br />
         <h3>{this.props.id}</h3>
         <div className="knob" />
-
-        {this.state.colourSelectedDoor && (
-          <div>
-            <h2>Selected</h2>
-          </div>
-        )}
+        <br />
       </div>
     );
   }
