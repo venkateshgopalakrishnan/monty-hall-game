@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/monty-hall-game/static/js/runtime~main.35762157.js"
   },
   {
-    "revision": "58a7f605c0599a201eb3",
-    "url": "/monty-hall-game/static/js/main.719d5463.chunk.js"
+    "revision": "99677765fe42ad2a0067",
+    "url": "/monty-hall-game/static/js/main.b1f3e0b0.chunk.js"
   },
   {
     "revision": "53473c3d00e238fcf1f0",
     "url": "/monty-hall-game/static/js/2.13b4d10b.chunk.js"
   },
   {
-    "revision": "58a7f605c0599a201eb3",
-    "url": "/monty-hall-game/static/css/main.9427a443.chunk.css"
+    "revision": "99677765fe42ad2a0067",
+    "url": "/monty-hall-game/static/css/main.c8d034a3.chunk.css"
   },
   {
-    "revision": "dafd9db0e1f92316fc7b3ef248066b6d",
+    "revision": "110d88bfe593e380f897287eaea5e07a",
     "url": "/monty-hall-game/index.html"
   }
 ];
