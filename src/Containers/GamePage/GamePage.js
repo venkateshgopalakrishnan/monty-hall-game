@@ -20,30 +20,24 @@ class GamePage extends React.Component {
     // console.log(arr)
   };
   state = {
-    //  Set to false before deployment ------------->>>>>>>>>>>>>>>>>>>>>>>
-    isPlayClicked: false,
     doors: ["A", "B", "C"],
     prizes: this.shuffleArray(),
     userSelectedDoor: null,
     revealedDoor: null,
     userWon: null,
-    userSelectedFinal: null,
     prizeDoor: null
   };
 
   renderDoors = () => {
     return this.state.doors.map(door => (
-      <Col xs={4}>
+      <Col xs={4} key={door}>
         <Door
           id={door}
           selectedDoor={
             !this.state.userSelectedDoor && (id => this.userSelection(id))
           }
           colorDoor={
-            (this.state.userSelectedDoor || this.state.userSelectedFinal) ===
-            door
-              ? "doorSelected"
-              : "door"
+            this.state.userSelectedDoor === door ? "doorSelected" : "door"
           }
         />
       </Col>
@@ -88,7 +82,7 @@ class GamePage extends React.Component {
 
   changeChoice = () => {
     this.setState(prevState => ({
-      userSelectedFinal:
+      userSelectedDoor:
         prevState.userSelectedDoor === "A" && this.state.revealedDoor === "B"
           ? "C"
           : prevState.userSelectedDoor === "A" &&
@@ -108,38 +102,53 @@ class GamePage extends React.Component {
           ? "A"
           : null
     }));
-    this.declareResult();
+    this.findResult(true);
   };
 
-  declareResult = () => {
-    this.state.userSelectedFinal === "A" && this.state.prizes[0] === "Car"
-      ? this.setState({ userWon: true })
-      : this.state.userSelectedFinal === "B" && this.state.prizes[1] === "Car"
-      ? this.setState({ userWon: true })
-      : this.state.userSelectedFinal === "C" && this.state.prizes[2] === "Car"
-      ? this.setState({ userWon: true })
-      : this.setState({ userWon: false });
-
-    this.revealResult();
+  keepChoice = () => {
+    this.setState(prevState => ({
+      userSelectedDoor: prevState.userSelectedDoor
+    }));
+    this.findResult(false);
+  };
+  //  ********************** Trust me, this function below is fucked up **********************
+  // ******************** And I dont know why ***************************
+  // ******************** It is for the future ME to find it out ********************
+  findResult = fromChangeChoice => {
+    fromChangeChoice === false
+      ? this.state.userSelectedDoor === "A" && this.state.prizes[0] === "Car"
+        ? this.setState({ userWon: true })
+        : this.state.userSelectedDoor === "B" && this.state.prizes[1] === "Car"
+        ? this.setState({ userWon: true })
+        : this.state.userSelectedDoor === "C" && this.state.prizes[2] === "Car"
+        ? this.setState({ userWon: true })
+        : this.setState({ userWon: false })
+      : // else if its from changeChoice
+      this.state.userSelectedDoor === "A" && this.state.prizes[0] === "Car"
+      ? this.setState({ userWon: false })
+      : this.state.userSelectedDoor === "B" && this.state.prizes[1] === "Car"
+      ? this.setState({ userWon: false })
+      : this.state.userSelectedDoor === "C" && this.state.prizes[2] === "Car"
+      ? this.setState({ userWon: false })
+      : this.setState({ userWon: true });
   };
 
   revealResult = () => {
-    return this.state.userWon === true ? (
-      <h2>You won</h2>
-    ) : this.state.userWon === false ? (
-      <h2>You Lost</h2>
-    ) : null;
+    var result =
+      this.state.userWon === true ? (
+        <h2 style={{ color: "white" }}>You won</h2>
+      ) : this.state.userWon === false ? (
+        <h2 style={{ color: "white" }}>You Lost</h2>
+      ) : null;
+    return result;
   };
   refreshPage = () => {
     this.setState({
-      //  Set to false before deployment ------------->>>>>>>>>>>>>>>>>>>>>>>
-      isPlayClicked: false,
       doors: ["A", "B", "C"],
       prizes: this.shuffleArray(),
       userSelectedDoor: null,
       revealedDoor: null,
-      userWon: null,
-      userSelectedFinal: null
+      userWon: null
     });
   };
 
@@ -156,8 +165,10 @@ class GamePage extends React.Component {
               Reveal Door
             </button>
           )}
-          {this.state.revealedDoor && !this.state.userSelectedFinal && (
-            <div>
+          <br />
+
+          {this.state.revealedDoor && this.state.userSelectedDoor != null && this.state.userWon == null && (
+            <div style={{ color: "white" }}>
               <h1> Door {this.state.revealedDoor} has a goat behind it</h1>
               <h4>Do you want to change your choice to the other door</h4>
               <Row>
@@ -174,12 +185,7 @@ class GamePage extends React.Component {
                   <button
                     className="button"
                     style={{ fontSize: "30px" }}
-                    onClick={() => {
-                      this.setState({
-                        userSelectedFinal: this.state.userSelectedDoor
-                      });
-                      this.declareResult();
-                    }}
+                    onClick={this.keepChoice}
                   >
                     <span>No Way _|_</span>
                   </button>
