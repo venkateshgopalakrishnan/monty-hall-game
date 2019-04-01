@@ -6,7 +6,7 @@ import "./App.css"
 class App extends Component {
   render() {
     return (
-      <div className="text-center" style = {{height: "100vh", width:"100%"}}>
+      <div className="text-center" style = {{height: "100%", width:"100%"}}>
         <Title />
         <br />
         <GamePage />

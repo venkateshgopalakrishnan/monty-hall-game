@@ -52,8 +52,6 @@ class GamePage extends React.Component {
 
   userSelection = id => {
     this.setState({ userSelectedDoor: id });
-    if (this.state.userSelectedDoor) {
-    }
   };
 
   revealDoor = () => {
@@ -85,8 +83,7 @@ class GamePage extends React.Component {
           ? "B"
           : null
         : null;
-    this.state.revealedDoor = id;
-    return <h2>Door {id} has a goat behind it</h2>;
+    this.setState({ revealedDoor: id });
   };
 
   changeChoice = () => {
@@ -111,27 +108,28 @@ class GamePage extends React.Component {
           ? "A"
           : null
     }));
+    this.declareResult();
   };
 
   declareResult = () => {
     this.state.userSelectedFinal === "A" && this.state.prizes[0] === "Car"
-      ? (this.state.userWon = true)
+      ? this.setState({ userWon: true })
       : this.state.userSelectedFinal === "B" && this.state.prizes[1] === "Car"
-      ? (this.state.userWon = true)
+      ? this.setState({ userWon: true })
       : this.state.userSelectedFinal === "C" && this.state.prizes[2] === "Car"
-      ? (this.state.userWon = true)
-      : (this.state.userWon = false);
+      ? this.setState({ userWon: true })
+      : this.setState({ userWon: false });
 
-    var result =
-      this.state.userWon && this.state.userWon === true ? (
-        <h2>You won</h2>
-      ) : this.state.userWon === false ? (
-        <h2>You Lost</h2>
-      ) : null;
-
-    return result;
+    this.revealResult();
   };
 
+  revealResult = () => {
+    return this.state.userWon === true ? (
+      <h2>You won</h2>
+    ) : this.state.userWon === false ? (
+      <h2>You Lost</h2>
+    ) : null;
+  };
   refreshPage = () => {
     this.setState({
       //  Set to false before deployment ------------->>>>>>>>>>>>>>>>>>>>>>>
@@ -147,52 +145,55 @@ class GamePage extends React.Component {
 
   render() {
     return (
-      <div align="center" style = {{height: "100vh", width:"100%"}}>
+      <div align="center" style={{ height: "100vh", width: "100%" }}>
         <br />
         <br />
         <Container align="center">
           <Row>{this.renderDoors()}</Row>
+          <br />
+          {this.state.userSelectedDoor != null && !this.state.revealedDoor && (
+            <button className="button" onClick={this.revealDoor}>
+              Reveal Door
+            </button>
+          )}
+          {this.state.revealedDoor && !this.state.userSelectedFinal && (
+            <div>
+              <h1> Door {this.state.revealedDoor} has a goat behind it</h1>
+              <h4>Do you want to change your choice to the other door</h4>
+              <Row>
+                <Col xs={6}>
+                  <button
+                    className="button"
+                    style={{ fontSize: "30px" }}
+                    onClick={this.changeChoice}
+                  >
+                    <span>Yes</span>
+                  </button>
+                </Col>
+                <Col xs={6}>
+                  <button
+                    className="button"
+                    style={{ fontSize: "30px" }}
+                    onClick={() => {
+                      this.setState({
+                        userSelectedFinal: this.state.userSelectedDoor
+                      });
+                      this.declareResult();
+                    }}
+                  >
+                    <span>No Way _|_</span>
+                  </button>
+                </Col>
+              </Row>
+            </div>
+          )}
+          {this.state.userWon != null && this.revealResult()}
+          {this.state.userWon != null && (
+            <button className="button" onClick={this.refreshPage}>
+              <span>Play Again</span>
+            </button>
+          )}
         </Container>
-        <br />
-        {this.state.userSelectedDoor && !this.state.userSelectedFinal && (
-          <div>
-            <h4>
-              Now I would like to reveal one door which has a goat behind it
-            </h4>
-            {this.revealDoor()}
-            <h4>Do you want to change your choice to the other door</h4>
-            <Row>
-              <Col xg={4}>
-                <button
-                  className="button"
-                  style={{ fontSize: "30px" }}
-                  onClick={this.changeChoice}
-                >
-                  <span>Yes</span>
-                </button>
-              </Col>
-              <Col xg={4}>
-                <button
-                  className="button"
-                  style={{ fontSize: "30px" }}
-                  onClick={() =>
-                    this.setState({
-                      userSelectedFinal: this.state.userSelectedDoor
-                    })
-                  }
-                >
-                  <span>No Way _|_</span>
-                </button>
-              </Col>
-            </Row>
-          </div>
-        )}
-        {this.state.userSelectedFinal != null ? this.declareResult() : null}
-        {this.state.userWon != null && (
-          <button className="button" onClick={this.refreshPage}>
-            <span>Play Again</span>
-          </button>
-        )}
       </div>
     );
   }
