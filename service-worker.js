@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/monty-hall-game/precache-manifest.58d507ea9688412381bb620ce3066606.js"
+  "/monty-hall-game/precache-manifest.a0454aa6bedfd2a4b8b1c717720a8a1a.js"
 );
 
 workbox.clientsClaim();
